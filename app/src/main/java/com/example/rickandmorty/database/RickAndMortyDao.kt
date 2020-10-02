@@ -1,0 +1,21 @@
+package com.example.rickandmorty.database
+
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.example.rickandmorty.pojo.Result
+
+@Dao
+interface RickAndMortyDao {
+
+    @Query("SELECT * FROM RandM")
+    fun getInfoAboutRandM() : LiveData<List<Result>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertInfoAboutRandM(info : Result)
+
+    @Query("DELETE FROM RandM")
+    fun deleteAllInfo()
+}
