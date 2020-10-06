@@ -14,8 +14,12 @@ interface RickAndMortyDao {
     fun getInfoAboutRandM() : LiveData<List<Result>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertInfoAboutRandM(info : Result)
+    fun insertInfoAboutRandM(info : List<Result>)
 
     @Query("DELETE FROM RandM")
     fun deleteAllInfo()
+
+    @Query("SELECT * FROM RandM WHERE id ==:id")
+    fun getCharacterById(id : Int) : LiveData<Result>
+
 }

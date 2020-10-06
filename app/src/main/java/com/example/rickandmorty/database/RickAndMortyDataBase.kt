@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.rickandmorty.converters.Converter
 import com.example.rickandmorty.pojo.Result
 
 
-@Database(entities = [Result::class], version = 1, exportSchema = false)
+@Database(entities = [Result::class], version = 6, exportSchema = false)
+@TypeConverters(value = [Converter::class])
 abstract class RickAndMortyDataBase : RoomDatabase()  {
     companion object {
         private var db : RickAndMortyDataBase? = null

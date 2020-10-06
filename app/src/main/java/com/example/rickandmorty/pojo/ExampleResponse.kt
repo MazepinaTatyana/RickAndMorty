@@ -7,5 +7,9 @@ import com.google.gson.annotations.SerializedName
 class ExampleResponse {
     @SerializedName("results")
     @Expose
-    private val results: List<Result>? = null
+    val results: List<Result>? = null
+
+    @SerializedName("info")
+    @Expose
+    val info: Info? = null
 }
