@@ -2,8 +2,8 @@ package com.example.rickandmorty
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -48,7 +48,8 @@ class MainActivity : AppCompatActivity() {
         viewModel.errors.observe(this, object : Observer<Throwable> {
             override fun onChanged(t: Throwable?) {
                 if (t != null) {
-                    t.message?.let { Log.d("qwerty", it) }
+                    Toast.makeText(this@MainActivity, t.message, Toast.LENGTH_SHORT).show()
+                    viewModel.clearErrors()
                 }
             }
 

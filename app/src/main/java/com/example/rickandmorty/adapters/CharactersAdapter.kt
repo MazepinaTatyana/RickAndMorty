@@ -11,16 +11,16 @@ import kotlinx.android.synthetic.main.character_item.view.*
 
 class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.CharactersViewHolder>() {
 
-    var characters : List<Result> = arrayListOf()
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
-    var onClickCharacterListener : OnClickCharacterListener? = null
-    var onReachEndListener : OnReachEndListener? = null
+    var characters: List<Result> = arrayListOf()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+    var onClickCharacterListener: OnClickCharacterListener? = null
+    var onReachEndListener: OnReachEndListener? = null
 
     interface OnClickCharacterListener {
-        fun onClickCharacter (position: Int)
+        fun onClickCharacter(position: Int)
     }
 
     interface OnReachEndListener {
@@ -37,7 +37,8 @@ class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.CharactersViewH
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.character_item, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.character_item, parent, false)
         return CharactersViewHolder(view)
     }
 

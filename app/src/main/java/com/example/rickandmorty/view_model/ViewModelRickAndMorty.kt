@@ -1,7 +1,6 @@
 package com.example.rickandmorty.view_model
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -29,6 +28,10 @@ class ViewModelRickAndMorty(application: Application) : AndroidViewModel(applica
       return db.rickAndMortyDao().getCharacterById(id)
     }
 
+    fun clearErrors() {
+        errors.value = null
+    }
+
     fun loadData(page : Int) {
         compositeDisposable = CompositeDisposable()
         val disposable = ApiFactory.apiService.getAllInfo(page)
@@ -41,7 +44,6 @@ class ViewModelRickAndMorty(application: Application) : AndroidViewModel(applica
                 info = it.info!!
 
             }, {
-                Log.d("test", it.message.toString())
                 errors.postValue(it)
 
             })
