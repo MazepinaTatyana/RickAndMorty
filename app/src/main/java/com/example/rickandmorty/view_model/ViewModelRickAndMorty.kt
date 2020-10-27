@@ -8,10 +8,13 @@ import com.example.rickandmorty.api.ApiFactory
 import com.example.rickandmorty.database.RickAndMortyDataBase
 import com.example.rickandmorty.pojo.Info
 import com.example.rickandmorty.pojo.Result
+import com.example.rickandmorty.repository.RickAndMortyRepository
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class ViewModelRickAndMorty(application: Application) : AndroidViewModel(application) {
+
+class ViewModelRickAndMorty @Inject constructor (application: Application) : AndroidViewModel(application), RickAndMortyRepository {
     val db = RickAndMortyDataBase.getInstance(application)
     var result: LiveData<List<Result>>
     var compositeDisposable = CompositeDisposable()
@@ -24,15 +27,15 @@ class ViewModelRickAndMorty(application: Application) : AndroidViewModel(applica
 
     }
 
-    fun getCharacterById(id : Int) : LiveData<Result> {
+    override fun getCharacterById(id : Int) : LiveData<Result> {
       return db.rickAndMortyDao().getCharacterById(id)
     }
 
-    fun clearErrors() {
+    override fun clearErrors() {
         errors.value = null
     }
 
-    fun loadData(page : Int) {
+    override fun loadData(page : Int) {
         compositeDisposable = CompositeDisposable()
         val disposable = ApiFactory.apiService.getAllInfo(page)
             .subscribeOn(Schedulers.io())
@@ -52,8 +55,7 @@ class ViewModelRickAndMorty(application: Application) : AndroidViewModel(applica
         }
     }
 
-    override fun onCleared() {
+    override fun disposeDisposable() {
         compositeDisposable.dispose()
-        super.onCleared()
     }
 }

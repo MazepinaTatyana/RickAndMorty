@@ -15,11 +15,14 @@ import com.example.rickandmorty.view_model.ViewModelRickAndMorty
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity() {
 
+    @Inject
     lateinit var viewModel: ViewModelRickAndMorty
+
     val adapter = CharactersAdapter()
     var page = 1
 
@@ -77,5 +80,10 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    override fun onDestroy() {
+        viewModel.disposeDisposable()
+        super.onDestroy()
     }
 }
