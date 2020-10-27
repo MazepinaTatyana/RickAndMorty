@@ -12,7 +12,10 @@ import com.example.rickandmorty.adapters.CharactersAdapter
 import com.example.rickandmorty.pojo.Result
 import com.example.rickandmorty.view_model.ViewModelFactory
 import com.example.rickandmorty.view_model.ViewModelRickAndMorty
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
