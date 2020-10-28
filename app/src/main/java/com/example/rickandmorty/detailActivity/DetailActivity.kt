@@ -1,33 +1,29 @@
-package com.example.rickandmorty
+package com.example.rickandmorty.detailActivity
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import com.example.rickandmorty.R
 import com.example.rickandmorty.pojo.Result
-import com.example.rickandmorty.view_model.ViewModelFactory
-import com.example.rickandmorty.view_model.ViewModelRickAndMorty
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
-import javax.inject.Inject
 
+//@AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var viewModel: ViewModelRickAndMorty
-
+    private val detailViewModel by viewModels<DetailViewModel> {
+        DetailViewModelFactory(
+            DetailRepository(application)
+        )
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(application)
-        )[ViewModelRickAndMorty::class.java]
-
         if (intent.hasExtra("characterId")) {
             val id = intent.getIntExtra("characterId", -1)
-            viewModel.getCharacterById(id).observe(this, object : Observer<Result> {
+            detailViewModel.getCharacterById(id).observe(this, object : Observer<Result> {
                 override fun onChanged(characterInfo: Result?) {
                     if (characterInfo != null) {
                         textViewCreated.text = characterInfo.created
@@ -40,16 +36,7 @@ class DetailActivity : AppCompatActivity() {
                         Picasso.get().load(characterInfo.image).into(imageViewCharacter)
                     }
                 }
-
             })
-
         }
-
     }
-
-    override fun onDestroy() {
-        viewModel.disposeDisposable()
-        super.onDestroy()
-    }
-
 }

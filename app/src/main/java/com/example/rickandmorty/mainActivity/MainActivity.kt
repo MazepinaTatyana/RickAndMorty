@@ -1,30 +1,31 @@
-package com.example.rickandmorty
+package com.example.rickandmorty.mainActivity
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.rickandmorty.R
 import com.example.rickandmorty.adapters.CharactersAdapter
+import com.example.rickandmorty.detailActivity.DetailActivity
 import com.example.rickandmorty.pojo.Result
-import com.example.rickandmorty.view_model.ViewModelFactory
-import com.example.rickandmorty.view_model.ViewModelRickAndMorty
-import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
-
+//@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var viewModel: ViewModelRickAndMorty
+     private val mainViewModel by viewModels<MainViewModel> {
+         MainViewModelFactory(
+             MainRepository(application)
+         )
+     }
 
     val adapter = CharactersAdapter()
     var page = 1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -32,17 +33,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(application)
-        )[ViewModelRickAndMorty::class.java]
-
         recyclerViewCharacters.layoutManager =
             LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         recyclerViewCharacters.adapter = adapter
         progressBarLoading.visibility = View.VISIBLE
 
-        viewModel.result.observe(this, object : Observer<List<Result>> {
+        mainViewModel.result.observe(this, object : Observer<List<Result>> {
             override fun onChanged(characters: List<Result>?) {
                 if (characters != null) {
                     progressBarLoading.visibility = View.INVISIBLE
@@ -51,16 +47,16 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-        viewModel.errors.observe(this, object : Observer<Throwable> {
+        mainViewModel.errors.observe(this, object : Observer<Throwable> {
             override fun onChanged(t: Throwable?) {
                 if (t != null) {
                     Toast.makeText(this@MainActivity, t.message, Toast.LENGTH_SHORT).show()
-                    viewModel.clearErrors()
+                    mainViewModel.clearErrors()
                 }
             }
 
         })
-        viewModel.loadData(page)
+        mainViewModel.loadData(page)
 
         adapter.onClickCharacterListener = object : CharactersAdapter.OnClickCharacterListener {
             override fun onClickCharacter(position: Int) {
@@ -73,17 +69,11 @@ class MainActivity : AppCompatActivity() {
 
         adapter.onReachEndListener = object : CharactersAdapter.OnReachEndListener {
             override fun onReachEnd() {
-                if (page < viewModel.info.pages) {
-                    viewModel.loadData(page++)
+                if (page < mainViewModel.info.pages) {
+                    mainViewModel.loadData(page++)
                 }
             }
 
         }
-
-    }
-
-    override fun onDestroy() {
-        viewModel.disposeDisposable()
-        super.onDestroy()
     }
 }
