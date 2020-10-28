@@ -10,8 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.R
 import com.example.rickandmorty.adapters.CharactersAdapter
+import com.example.rickandmorty.api.ApiFactory
+import com.example.rickandmorty.database.RickAndMortyDataBase
 import com.example.rickandmorty.detailActivity.DetailActivity
 import com.example.rickandmorty.pojo.Result
+import com.example.rickandmorty.repository.RickAndMortyRepository
 import kotlinx.android.synthetic.main.activity_main.*
 
 //@AndroidEntryPoint
@@ -19,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
      private val mainViewModel by viewModels<MainViewModel> {
          MainViewModelFactory(
-             MainRepository(application)
+             RickAndMortyRepository(ApiFactory.apiService, RickAndMortyDataBase.getInstance(this)), application
          )
      }
 

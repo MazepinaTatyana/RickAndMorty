@@ -5,7 +5,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.rickandmorty.R
+import com.example.rickandmorty.api.ApiFactory
+import com.example.rickandmorty.database.RickAndMortyDataBase
 import com.example.rickandmorty.pojo.Result
+import com.example.rickandmorty.repository.RickAndMortyRepository
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
 
@@ -14,7 +17,7 @@ class DetailActivity : AppCompatActivity() {
 
     private val detailViewModel by viewModels<DetailViewModel> {
         DetailViewModelFactory(
-            DetailRepository(application)
+            RickAndMortyRepository(ApiFactory.apiService, RickAndMortyDataBase.getInstance(this))
         )
     }
     override fun onCreate(savedInstanceState: Bundle?) {
