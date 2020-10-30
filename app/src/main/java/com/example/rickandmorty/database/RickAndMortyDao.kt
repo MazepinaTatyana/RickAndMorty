@@ -1,6 +1,7 @@
 package com.example.rickandmorty.database
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -11,7 +12,7 @@ import com.example.rickandmorty.pojo.Result
 interface RickAndMortyDao {
 
     @Query("SELECT * FROM RandM")
-    fun getInfoAboutRandM() : LiveData<List<Result>>
+    fun getInfoAboutRandM() : DataSource.Factory<Int, Result>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertInfoAboutRandM(info : List<Result>)

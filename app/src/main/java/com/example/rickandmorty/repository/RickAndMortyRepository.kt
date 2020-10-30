@@ -1,6 +1,7 @@
 package com.example.rickandmorty.repository
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import com.example.rickandmorty.api.ApiService
 import com.example.rickandmorty.database.RickAndMortyDataBase
 import com.example.rickandmorty.pojo.ExampleResponse
@@ -14,6 +15,10 @@ class RickAndMortyRepository(
 
     override fun getCharacters(page: Int) : Observable<ExampleResponse> {
         return api.getAllInfo(page)
+    }
+
+    override fun getCharacters(): DataSource.Factory<Int, Result> {
+       return dataBase.rickAndMortyDao().getInfoAboutRandM()
     }
 
     override fun getCharacterById(id : Int) : LiveData<Result> {

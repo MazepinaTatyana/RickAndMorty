@@ -25,7 +25,7 @@ abstract class RickAndMortyDataBase : RoomDatabase()  {
                         context,
                         RickAndMortyDataBase::class.java,
                         DB_NAME
-                    )   .fallbackToDestructiveMigration()
+                    )
                         .build()
                 db = instance
                 return instance

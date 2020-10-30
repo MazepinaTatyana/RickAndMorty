@@ -3,55 +3,70 @@ package com.example.rickandmorty.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.R
+import com.example.rickandmorty.api.State
 import com.example.rickandmorty.pojo.Result
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.character_item.view.*
 
-class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.CharactersViewHolder>() {
+class CharactersAdapter(function: () -> Unit) :
+    PagedListAdapter<Result, RecyclerView.ViewHolder>(NewsDiffCallback) {
 
-    var characters: List<Result> = arrayListOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+    private var state = State.LOADING
     var onClickCharacterListener: OnClickCharacterListener? = null
-    var onReachEndListener: OnReachEndListener? = null
 
     interface OnClickCharacterListener {
-        fun onClickCharacter(position: Int)
-    }
-
-    interface OnReachEndListener {
-        fun onReachEnd()
+        fun onClickCharacter(position: Int, v: View)
     }
 
     inner class CharactersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        init {
-            itemView.setOnClickListener {
-                onClickCharacterListener?.let { it.onClickCharacter(adapterPosition) }
+        fun bind(result: Result?) {
+            itemView.textViewRVChar.text = result?.name
+            Picasso.get().load(result?.image).into(itemView.imageViewRVChar)
+            itemView.textViewRVChar.textViewId = result?.id!!
+        }
+    }
+
+    companion object {
+        val NewsDiffCallback = object : DiffUtil.ItemCallback<Result>() {
+            override fun areItemsTheSame(oldItem: Result, newItem: Result): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Result, newItem: Result): Boolean {
+                return oldItem == newItem
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.character_item, parent, false)
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.character_item, parent, false)
         return CharactersViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return characters.size
+        return super.getItemCount()
     }
 
-    override fun onBindViewHolder(holder: CharactersViewHolder, position: Int) {
-        if (characters.size >= 20 && position == characters.size - 3 && onReachEndListener != null) {
-            onReachEndListener?.onReachEnd()
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        (holder as CharactersViewHolder).bind(getItem(position))
+        holder.itemView.setOnClickListener {
+            onClickCharacterListener?.let {
+                it.onClickCharacter(
+                    holder.adapterPosition,
+                    holder.itemView
+                )
+            }
         }
-        val character = characters[position]
-        holder.itemView.textViewRVChar.text = character.name
-        Picasso.get().load(character.image).into(holder.itemView.imageViewRVChar)
+    }
+
+    fun setState(state: State) {
+        this.state = state
+        notifyItemChanged(super.getItemCount())
     }
 }
