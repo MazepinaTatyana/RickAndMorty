@@ -15,11 +15,17 @@ import kotlinx.android.synthetic.main.character_item.view.*
 class CharactersAdapter(function: () -> Unit) :
     PagedListAdapter<Result, RecyclerView.ViewHolder>(NewsDiffCallback) {
 
+//    var characterPagedList = arrayListOf<Result>()
+//    set(value) {
+//        field = value
+//        notifyDataSetChanged()
+//    }
+
     private var state = State.LOADING
     var onClickCharacterListener: OnClickCharacterListener? = null
 
     interface OnClickCharacterListener {
-        fun onClickCharacter(position: Int, v: View)
+        fun onClickCharacter(position: Int, id: Int)
     }
 
     inner class CharactersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -51,16 +57,21 @@ class CharactersAdapter(function: () -> Unit) :
 
     override fun getItemCount(): Int {
         return super.getItemCount()
+//        return characterPagedList.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val characterId = getItem(position)?.id
         (holder as CharactersViewHolder).bind(getItem(position))
         holder.itemView.setOnClickListener {
             onClickCharacterListener?.let {
-                it.onClickCharacter(
-                    holder.adapterPosition,
-                    holder.itemView
-                )
+                if (characterId != null) {
+                    it.onClickCharacter(
+                        holder.adapterPosition,
+                        characterId
+                    )
+                }
+
             }
         }
     }

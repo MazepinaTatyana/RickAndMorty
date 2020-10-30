@@ -2,7 +2,6 @@ package com.example.rickandmorty.mainActivity
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.view.View.*
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -19,7 +18,6 @@ import com.example.rickandmorty.detailActivity.DetailActivity
 import com.example.rickandmorty.pojo.Result
 import com.example.rickandmorty.repository.RickAndMortyRepository
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.character_item.view.*
 
 //@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -32,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     lateinit var adapter: CharactersAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -42,6 +41,7 @@ class MainActivity : AppCompatActivity() {
             this@MainActivity,
             object : Observer<PagedList<Result>> {
                 override fun onChanged(t: PagedList<Result>?) {
+//                    adapter.characterPagedList = t
                     adapter.submitList(t)
                     progressBarLoading.visibility = INVISIBLE
                 }
@@ -81,10 +81,9 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         adapter.onClickCharacterListener = object : CharactersAdapter.OnClickCharacterListener {
-            override fun onClickCharacter(position: Int, v: View) {
+            override fun onClickCharacter(position: Int, characterId: Int) {
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                val id = v.textViewRVChar.textViewId
-                intent.putExtra("id", id)
+                intent.putExtra("id", characterId)
                 startActivity(intent)
             }
         }
