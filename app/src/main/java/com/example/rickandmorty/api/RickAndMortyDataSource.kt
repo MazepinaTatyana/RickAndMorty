@@ -10,15 +10,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class RickAndMortyDataSource(
+class RickAndMortyDataSource @Inject constructor(
     private val api: ApiService,
-    private val compositeDisposable: CompositeDisposable,
     private val dataBase: RickAndMortyDataBase
 ) : PageKeyedDataSource<Int, Result>() {
 
     var state: MutableLiveData<State> = MutableLiveData()
     private var retryCompletable: Completable? = null
+    private val compositeDisposable = CompositeDisposable()
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,

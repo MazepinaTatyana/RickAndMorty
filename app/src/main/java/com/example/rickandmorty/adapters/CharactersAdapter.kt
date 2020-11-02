@@ -11,8 +11,9 @@ import com.example.rickandmorty.api.State
 import com.example.rickandmorty.pojo.Result
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.character_item.view.*
+import javax.inject.Inject
 
-class CharactersAdapter(function: () -> Unit) :
+class CharactersAdapter @Inject constructor(function: () -> Unit) :
     PagedListAdapter<Result, RecyclerView.ViewHolder>(NewsDiffCallback) {
 
 //    var characterPagedList = arrayListOf<Result>()
@@ -32,7 +33,6 @@ class CharactersAdapter(function: () -> Unit) :
         fun bind(result: Result?) {
             itemView.textViewRVChar.text = result?.name
             Picasso.get().load(result?.image).into(itemView.imageViewRVChar)
-            itemView.textViewRVChar.textViewId = result?.id!!
         }
     }
 
@@ -57,7 +57,6 @@ class CharactersAdapter(function: () -> Unit) :
 
     override fun getItemCount(): Int {
         return super.getItemCount()
-//        return characterPagedList.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

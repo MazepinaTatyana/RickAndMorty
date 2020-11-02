@@ -20,7 +20,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <com.example.rickandmorty.custom.TextViewId
+        <TextView
             android:id="@+id/textViewRVChar"
             style="@style/Text"
             android:layout_width="wrap_content"

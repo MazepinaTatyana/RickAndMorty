@@ -2,6 +2,7 @@ package com.example.rickandmorty.mainActivity
 
 
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -21,14 +22,14 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 
-class MainViewModel(
+class MainViewModel @ViewModelInject constructor(
     val repo: RickAndMortyRepository,
-    private val dataBase: RickAndMortyDataBase
+    private val dataBase: RickAndMortyDataBase,
+    private val api: ApiService
     ) : ViewModel() {
 
-    private val page = 1
     private val pageSize = 5
-    private val api = ApiService.getService()
+//    private val api = ApiService.getService()
 
     var charactersList: LiveData<PagedList<Result>>
     private val compositeDisposable = CompositeDisposable()
@@ -39,7 +40,7 @@ class MainViewModel(
     var info = Info()
 
     init {
-        rickAndMortyDataSourceFactory = RickAndMortyDataSourceFactory(api, compositeDisposable, dataBase)
+        rickAndMortyDataSourceFactory = RickAndMortyDataSourceFactory(api, dataBase)
         val config = PagedList.Config.Builder()
             .setPageSize(pageSize)
             .setInitialLoadSizeHint(pageSize * 2)

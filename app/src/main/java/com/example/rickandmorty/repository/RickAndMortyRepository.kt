@@ -3,14 +3,16 @@ package com.example.rickandmorty.repository
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import com.example.rickandmorty.api.ApiService
-import com.example.rickandmorty.database.RickAndMortyDataBase
+import com.example.rickandmorty.database.RickAndMortyDao
 import com.example.rickandmorty.pojo.ExampleResponse
 import com.example.rickandmorty.pojo.Result
 import io.reactivex.Observable
+import javax.inject.Inject
 
-class RickAndMortyRepository(
+
+class RickAndMortyRepository @Inject constructor(
     private val api: ApiService,
-    private val dataBase: RickAndMortyDataBase
+    private val rickAndMortyDao: RickAndMortyDao
 ) : Repository {
 
     override fun getCharacters(page: Int) : Observable<ExampleResponse> {
@@ -18,10 +20,10 @@ class RickAndMortyRepository(
     }
 
     override fun getCharacters(): DataSource.Factory<Int, Result> {
-       return dataBase.rickAndMortyDao().getInfoAboutRandM()
+       return rickAndMortyDao.getInfoAboutRandM()
     }
 
     override fun getCharacterById(id : Int) : LiveData<Result> {
-        return dataBase.rickAndMortyDao().getCharacterById(id)
+        return rickAndMortyDao.getCharacterById(id)
     }
 }

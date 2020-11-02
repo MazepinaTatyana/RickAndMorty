@@ -11,23 +11,23 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.R
 import com.example.rickandmorty.adapters.CharactersAdapter
-import com.example.rickandmorty.api.ApiService
 import com.example.rickandmorty.api.State
-import com.example.rickandmorty.database.RickAndMortyDataBase
 import com.example.rickandmorty.detailActivity.DetailActivity
 import com.example.rickandmorty.pojo.Result
-import com.example.rickandmorty.repository.RickAndMortyRepository
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
-//@AndroidEntryPoint
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val mainViewModel by viewModels<MainViewModel> {
-        MainViewModelFactory(
-            RickAndMortyRepository(ApiService.getService(), RickAndMortyDataBase.getInstance(this)),
-            RickAndMortyDataBase.getInstance(this)
-        )
-    }
+//    @Inject lateinit var mainViewModel: MainViewModel
+    private val mainViewModel: MainViewModel by viewModels()
+//            by viewModels<MainViewModel> {
+//        MainViewModelFactory(
+//            RickAndMortyRepository(ApiService.getService(), RickAndMortyDataBase.getInstance(this)),
+//            RickAndMortyDataBase.getInstance(this)
+//        )
+//    }
 
     lateinit var adapter: CharactersAdapter
 
@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity() {
             this@MainActivity,
             object : Observer<PagedList<Result>> {
                 override fun onChanged(t: PagedList<Result>?) {
-//                    adapter.characterPagedList = t
                     adapter.submitList(t)
                     progressBarLoading.visibility = INVISIBLE
                 }
@@ -55,7 +54,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initAdapter() {
-        adapter = CharactersAdapter {
+        adapter = CharactersAdapter{
             mainViewModel.retry()
         }
         recyclerViewCharacters.layoutManager =

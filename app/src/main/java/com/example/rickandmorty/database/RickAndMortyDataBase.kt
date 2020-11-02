@@ -11,13 +11,13 @@ import com.example.rickandmorty.pojo.Result
 
 @Database(entities = [Result::class], version = 6, exportSchema = false)
 @TypeConverters(value = [Converter::class])
-abstract class RickAndMortyDataBase : RoomDatabase()  {
+abstract class RickAndMortyDataBase : RoomDatabase() {
     companion object {
-        private var db : RickAndMortyDataBase? = null
+        private var db: RickAndMortyDataBase? = null
         const val DB_NAME = "main.db"
         private val LOCK = Any()
 
-        fun getInstance(context: Context) : RickAndMortyDataBase {
+        fun getInstance(context: Context): RickAndMortyDataBase {
             synchronized(LOCK) {
                 db?.let { return it }
                 val instance =
@@ -26,11 +26,13 @@ abstract class RickAndMortyDataBase : RoomDatabase()  {
                         RickAndMortyDataBase::class.java,
                         DB_NAME
                     )
+                        .fallbackToDestructiveMigration()
                         .build()
                 db = instance
                 return instance
             }
         }
     }
-    abstract fun rickAndMortyDao() : RickAndMortyDao
+
+    abstract fun rickAndMortyDao(): RickAndMortyDao
 }
