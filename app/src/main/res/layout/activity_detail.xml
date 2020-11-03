@@ -12,7 +12,8 @@
         android:layout_height="wrap_content">
 
 
-        <ImageView
+        
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageViewCharacter"
             android:layout_width="300dp"
             android:layout_height="300dp"
@@ -25,7 +26,7 @@
             tools:srcCompat="@tools:sample/avatars" />
 
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewType"
             style="@style/Text"
             android:layout_width="0dp"
@@ -35,7 +36,8 @@
             android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/textViewSpecies" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewSpecies"/>
+
 
 
         <androidx.constraintlayout.widget.Guideline
@@ -52,7 +54,7 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.3" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewLabelName"
             style="@style/Text"
             android:layout_width="0dp"
@@ -65,7 +67,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewName"
             style="@style/Text"
             android:layout_width="0dp"
@@ -77,7 +79,7 @@
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="@+id/guideline" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewLabelStatus"
             style="@style/Text"
             android:layout_width="0dp"
@@ -90,7 +92,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewName" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewStatus"
             style="@style/Text"
             android:layout_width="0dp"
@@ -102,7 +104,7 @@
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textViewName" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewLabelSpecies"
             style="@style/Text"
             android:layout_width="0dp"
@@ -115,7 +117,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewStatus" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewSpecies"
             style="@style/Text"
             android:layout_width="0dp"
@@ -127,7 +129,7 @@
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textViewStatus" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewLabelType"
             style="@style/Text"
             android:layout_width="0dp"
@@ -140,7 +142,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewSpecies" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewLabelGender"
             style="@style/Text"
             android:layout_width="0dp"
@@ -153,7 +155,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewType" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewGender"
             style="@style/Text"
             android:layout_width="0dp"
@@ -165,7 +167,7 @@
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textViewType" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewLabelEpisode"
             style="@style/Text"
             android:layout_width="0dp"
@@ -179,7 +181,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewCreated" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewEpisode"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -195,7 +197,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewLabelEpisode" />
 
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewLabelCreated"
             style="@style/Text"
             android:layout_width="0dp"
@@ -209,7 +211,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewLabelGender" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewCreated"
             style="@style/Text"
             android:layout_width="0dp"

@@ -10,10 +10,11 @@ import com.example.rickandmorty.R
 import com.example.rickandmorty.api.State
 import com.example.rickandmorty.pojo.Result
 import com.squareup.picasso.Picasso
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.character_item.view.*
 import javax.inject.Inject
 
-class CharactersAdapter @Inject constructor(function: () -> Unit) :
+class CharactersAdapter @Inject constructor() :
     PagedListAdapter<Result, RecyclerView.ViewHolder>(NewsDiffCallback) {
 
 //    var characterPagedList = arrayListOf<Result>()
@@ -32,7 +33,7 @@ class CharactersAdapter @Inject constructor(function: () -> Unit) :
     inner class CharactersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(result: Result?) {
             itemView.textViewRVChar.text = result?.name
-            Picasso.get().load(result?.image).into(itemView.imageViewRVChar)
+            Picasso.get().load(result?.image).resize(300, 300).transform(CropCircleTransformation()).into(itemView.imageViewRVChar)
         }
     }
 

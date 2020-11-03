@@ -1,26 +1,27 @@
 package com.example.rickandmorty.mainActivity
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View.*
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.R
 import com.example.rickandmorty.adapters.CharactersAdapter
 import com.example.rickandmorty.api.State
 import com.example.rickandmorty.detailActivity.DetailActivity
-import com.example.rickandmorty.pojo.Result
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-//    @Inject lateinit var mainViewModel: MainViewModel
+    //    @Inject lateinit var mainViewModel: MainViewModel
     private val mainViewModel: MainViewModel by viewModels()
 //            by viewModels<MainViewModel> {
 //        MainViewModelFactory(
@@ -29,38 +30,36 @@ class MainActivity : AppCompatActivity() {
 //        )
 //    }
 
-    lateinit var adapter: CharactersAdapter
-
+    var adapter = CharactersAdapter()
+    val disposable = CompositeDisposable()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initAdapter()
-        initState()
-
-        mainViewModel.characterPagedList.observe(
-            this@MainActivity,
-            object : Observer<PagedList<Result>> {
-                override fun onChanged(t: PagedList<Result>?) {
-                    adapter.submitList(t)
-                    progressBarLoading.visibility = INVISIBLE
-                }
-            })
-
-        mainViewModel.errors.observe(this, object : Observer<Throwable> {
-            override fun onChanged(t: Throwable?) {
-                Toast.makeText(this@MainActivity, t?.message, Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-    private fun initAdapter() {
-        adapter = CharactersAdapter{
-            mainViewModel.retry()
-        }
         recyclerViewCharacters.layoutManager =
             LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         recyclerViewCharacters.adapter = adapter
-        mainViewModel.characterPagedList.observe(this, Observer {
+
+
+
+        if (isOnline(this)) {
+            initAdapter()
+            initState()
+        }
+
+        else {
+            mainViewModel.result.observe(this@MainActivity, Observer {
+                adapter.submitList(it)
+                progressBarLoading.visibility = INVISIBLE
+            })
+        }
+
+    }
+
+
+
+    private fun initAdapter() {
+        mainViewModel.retry()
+        mainViewModel.charactersList.observe(this, Observer {
             adapter.submitList(it)
         })
     }
@@ -86,5 +85,14 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+    }
+
+    fun isOnline(context: Context): Boolean {
+        val cm =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val netInfo = cm.activeNetworkInfo
+        return if (netInfo != null && netInfo.isConnectedOrConnecting) {
+            true
+        } else false
     }
 }

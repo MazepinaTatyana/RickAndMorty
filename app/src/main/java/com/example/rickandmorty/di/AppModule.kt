@@ -43,6 +43,8 @@ object AppModule {
     @Provides
     fun provideCharacterDao(database: RickAndMortyDataBase) =  database.rickAndMortyDao()
 
+    @Singleton
+    @Provides
     fun provideRepository(api: ApiService, dao: RickAndMortyDao) = RickAndMortyRepository(api, dao)
 
 }

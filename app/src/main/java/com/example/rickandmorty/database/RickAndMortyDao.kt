@@ -12,7 +12,8 @@ import com.example.rickandmorty.pojo.Result
 interface RickAndMortyDao {
 
     @Query("SELECT * FROM RandM")
-    fun getInfoAboutRandM() : DataSource.Factory<Int, Result>
+    fun getInfoAboutRandM() :  DataSource.Factory<Int, Result>
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertInfoAboutRandM(info : List<Result>)

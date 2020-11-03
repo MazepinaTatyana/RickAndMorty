@@ -20,6 +20,8 @@ class RickAndMortyDataSource @Inject constructor(
     var state: MutableLiveData<State> = MutableLiveData()
     private var retryCompletable: Completable? = null
     private val compositeDisposable = CompositeDisposable()
+    var errors = MutableLiveData<Throwable>()
+
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
@@ -34,11 +36,13 @@ class RickAndMortyDataSource @Inject constructor(
                         callback.onResult(
                             it1,
                             null,
-                            2
+                             + 1
                         )
 
                     }
                 }, {
+                    errors.postValue(it)
+                    Log.d("aaaaaa", it.message.toString())
                     updateState(State.ERROR)
                     setRetry(Action { loadInitial(params, callback) })
 
@@ -60,6 +64,7 @@ class RickAndMortyDataSource @Inject constructor(
                         dataBase.rickAndMortyDao().insertInfoAboutRandM(it1)
                     }
                 }, {
+                    errors.postValue(it)
                     updateState(State.ERROR)
                     setRetry(Action { loadAfter(params, callback) })
                 })
@@ -67,7 +72,9 @@ class RickAndMortyDataSource @Inject constructor(
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Result>) {
+        dataBase.rickAndMortyDao().getInfoAboutRandM()
     }
+
 
     private fun updateState(state: State) {
         this.state.postValue(state)
@@ -80,9 +87,11 @@ class RickAndMortyDataSource @Inject constructor(
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                    }, {
+                    } , {
                         Log.i("retryError", it.message.toString())
+                        errors.postValue(it)
                     })
+
             )
         }
     }
