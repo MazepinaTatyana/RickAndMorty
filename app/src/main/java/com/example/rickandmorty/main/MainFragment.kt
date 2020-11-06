@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.R
 import com.example.rickandmorty.adapters.CharactersAdapter
 import com.example.rickandmorty.api.State
-import com.example.rickandmorty.fragments.MainFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -34,9 +33,6 @@ class MainFragment : Fragment(), CharactersAdapter.OnClickCharacterListener {
 
     private val mainViewModel: MainViewModel by viewModels()
     var adapter = CharactersAdapter(this)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
