@@ -152,13 +152,7 @@
         android:id="@+id/textViewEpisode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:fontFamily="casual"
-        android:gravity="center"
-        android:padding="5dp"
-        android:textColor="#85004B"
-        android:textSize="17dp"
-        android:textStyle="bold"
+        style="@style/EpisodeStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewLabelEpisode" />
@@ -171,7 +165,6 @@
         android:layout_height="wrap_content"
         android:text="@string/created"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewLabelGender" />
 
