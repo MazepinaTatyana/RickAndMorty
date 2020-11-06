@@ -12,16 +12,4 @@ interface ApiService {
         @Query("page") page : Int = 1
     ) : Observable<ExampleResponse>
 
-//    companion object {
-//        const val BASE_URL = "https://rickandmortyapi.com/api/"
-//        fun getService(): ApiService
-//  {
-//             val retrofit = Retrofit.Builder()
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//                .baseUrl(BASE_URL)
-//                .build()
-//            return retrofit.create(ApiService::class.java)
-//        }
-//    }
 }

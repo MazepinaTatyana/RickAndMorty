@@ -21,14 +21,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    //    @Inject lateinit var mainViewModel: MainViewModel
     private val mainViewModel: MainViewModel by viewModels()
-//            by viewModels<MainViewModel> {
-//        MainViewModelFactory(
-//            RickAndMortyRepository(ApiService.getService(), RickAndMortyDataBase.getInstance(this)),
-//            RickAndMortyDataBase.getInstance(this)
-//        )
-//    }
+
 
     var adapter = CharactersAdapter()
     val disposable = CompositeDisposable()
@@ -91,8 +85,6 @@ class MainActivity : AppCompatActivity() {
         val cm =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val netInfo = cm.activeNetworkInfo
-        return if (netInfo != null && netInfo.isConnectedOrConnecting) {
-            true
-        } else false
+        return netInfo != null && netInfo.isConnectedOrConnecting
     }
 }

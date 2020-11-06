@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backdet"
+    android:background="@color/colorBackdround"
     tools:context=".detailActivity.DetailActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,18 +12,45 @@
         android:layout_height="wrap_content">
 
 
-        
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/det_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/det_app_bar"
+                style="@style/Widget.Character.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:navigationIcon="@drawable/vector">
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <FrameLayout
+            android:id="@+id/fl_image_main"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:background="@drawable/image_style"
+            android:elevation="8dp"
+            android:layout_margin="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/det_bar">
+
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageViewCharacter"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/charactersimage"
-            app:layout_constraintBottom_toTopOf="@id/guideline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
+        </FrameLayout>
 
 
         <com.google.android.material.textview.MaterialTextView
@@ -31,12 +58,8 @@
             style="@style/Text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="5dp"
-            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/textViewSpecies"/>
+            app:layout_constraintTop_toBottomOf="@+id/textViewSpecies" />
 
 
 
@@ -59,35 +82,25 @@
             style="@style/Text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
             android:text="@string/name"
-            android:textSize="20dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline" />
+            app:layout_constraintTop_toBottomOf="@id/fl_image_main"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewName"
             style="@style/Text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="5dp"
-            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="@+id/guideline" />
+            app:layout_constraintTop_toBottomOf="@id/fl_image_main" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewLabelStatus"
             style="@style/Text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
             android:text="@string/status"
-            android:textSize="20dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewName" />
@@ -97,11 +110,7 @@
             style="@style/Text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="5dp"
-            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textViewName" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -109,10 +118,7 @@
             style="@style/Text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
             android:text="@string/species"
-            android:textSize="20dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewStatus" />
@@ -122,11 +128,7 @@
             style="@style/Text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="5dp"
-            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textViewStatus" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -134,10 +136,7 @@
             style="@style/Text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
             android:text="@string/type"
-            android:textSize="20dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewSpecies" />
@@ -147,10 +146,7 @@
             style="@style/Text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
             android:text="@string/gender"
-            android:textSize="20dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewType" />
@@ -160,11 +156,7 @@
             style="@style/Text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="5dp"
-            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textViewType" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -172,12 +164,8 @@
             style="@style/Text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
             android:text="@string/episode"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewCreated" />
 
@@ -190,7 +178,7 @@
             android:gravity="center"
             android:padding="5dp"
             android:textColor="#85004B"
-            android:textSize="15dp"
+            android:textSize="17dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -202,10 +190,7 @@
             style="@style/Text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
             android:text="@string/created"
-            android:textSize="20dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintHorizontal_bias="0.555"
             app:layout_constraintStart_toStartOf="parent"
@@ -216,11 +201,7 @@
             style="@style/Text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="5dp"
-            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textViewGender" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

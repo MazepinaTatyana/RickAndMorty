@@ -17,25 +17,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <FrameLayout
+            android:id="@+id/fl_image_item"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/image_style"
+            android:elevation="8dp"
+            android:layout_margin="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageViewRVChar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
+        </FrameLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewRVChar"
             style="@style/Text"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageViewRVChar"
+            android:layout_margin="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/fl_image_item"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageViewRVChar"
+            app:layout_constraintStart_toEndOf="@+id/fl_image_item"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

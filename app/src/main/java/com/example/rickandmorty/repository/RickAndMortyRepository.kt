@@ -24,6 +24,9 @@ class RickAndMortyRepository @Inject constructor(
     }
 
     override fun getCharacterById(id : Int) : LiveData<Result> {
+
         return rickAndMortyDao.getCharacterById(id)
     }
+
 }
+

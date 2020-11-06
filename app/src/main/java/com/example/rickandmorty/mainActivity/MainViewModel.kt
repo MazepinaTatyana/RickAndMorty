@@ -18,6 +18,7 @@ import com.example.rickandmorty.pojo.Info
 import com.example.rickandmorty.pojo.Result
 import com.example.rickandmorty.repository.RickAndMortyRepository
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 
 class MainViewModel @ViewModelInject constructor(
@@ -27,17 +28,15 @@ class MainViewModel @ViewModelInject constructor(
     ) : ViewModel() {
 
     private val pageSize = 5
-//    private val api = ApiService.getService()
+
 
     var charactersList: LiveData<PagedList<Result>>
     private val compositeDisposable = CompositeDisposable()
     private val rickAndMortyDataSourceFactory: RickAndMortyDataSourceFactory
-    val datasource = RickAndMortyDataSource(api, dataBase)
-
-    var errors = datasource.errors
-//    var result = dataBase.rickAndMortyDao().getInfoAboutRandM().toObservable(5)
-    val result = dataBase.rickAndMortyDao().getInfoAboutRandM().toLiveData(5)
+    var datasource = RickAndMortyDataSource(api, dataBase)
+    var result = dataBase.rickAndMortyDao().getInfoAboutRandM().toLiveData(5)
     var info = Info()
+    var errors = datasource.errors
 
     init {
         rickAndMortyDataSourceFactory = RickAndMortyDataSourceFactory(api, dataBase)
@@ -68,24 +67,22 @@ class MainViewModel @ViewModelInject constructor(
         compositeDisposable.dispose()
     }
 
-    val characterPagedList = //charactersList
-    dataBase.rickAndMortyDao().getInfoAboutRandM().toLiveData(5)
-//        .toLiveData(10)
-//    val a = dataBase.rickAndMortyDao().getInfoAboutRandM().toObservable(2)
+    val characterPagedList: LiveData<PagedList<Result>> =
+        dataBase.rickAndMortyDao().getInfoAboutRandM().toLiveData(10)
 
 
-//    fun getCharacters(page: Int) {
-//        val disposable = repo.getCharacters(page)
-//            .subscribeOn(Schedulers.io())
-//            .subscribe({
-//                if (it != null) {
-//                    it.results?.let { it1 -> dataBase.rickAndMortyDao().insertInfoAboutRandM(it1) }
-//                }
-//                info = it.info!!
-//            }, {
-//                errors.postValue(it)
-//            })
-//    }
+    fun getCharacters(page: Int) {
+        val disposable = repo.getCharacters(page)
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                if (it != null) {
+                    it.results?.let { it1 -> dataBase.rickAndMortyDao().insertInfoAboutRandM(it1) }
+                }
+                info = it.info!!
+            }, {
+                errors.postValue(it)
+            })
+    }
     fun clearErrors() {
         errors.value = null
     }
