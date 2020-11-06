@@ -14,7 +14,7 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.character_item.view.*
 import javax.inject.Inject
 
-class CharactersAdapter @Inject constructor() :
+class CharactersAdapter @Inject constructor(private val listener: OnClickCharacterListener) :
     PagedListAdapter<Result, RecyclerView.ViewHolder>(NewsDiffCallback) {
 
 //    var characterPagedList = arrayListOf<Result>()
@@ -24,16 +24,27 @@ class CharactersAdapter @Inject constructor() :
 //    }
 
     private var state = State.LOADING
-    var onClickCharacterListener: OnClickCharacterListener? = null
 
     interface OnClickCharacterListener {
-        fun onClickCharacter(position: Int, id: Int)
+        fun onClickCharacter(id: Int)
     }
 
-    inner class CharactersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class CharactersViewHolder(itemView: View, val listener: OnClickCharacterListener) :
+        RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
+        private lateinit var character: Result
         fun bind(result: Result?) {
+            if (result != null) {
+                this.character = result
+            }
+            itemView.setOnClickListener(this)
             itemView.textViewRVChar.text = result?.name
-            Picasso.get().load(result?.image).resize(300, 300).transform(CropCircleTransformation()).into(itemView.imageViewRVChar)
+            Picasso.get().load(result?.image).resize(300, 300).transform(CropCircleTransformation())
+                .into(itemView.imageViewRVChar)
+        }
+
+        override fun onClick(v: View?) {
+        listener.onClickCharacter(character.id)
         }
     }
 
@@ -53,7 +64,7 @@ class CharactersAdapter @Inject constructor() :
         val view =
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.character_item, parent, false)
-        return CharactersViewHolder(view)
+        return CharactersViewHolder(view, listener)
     }
 
     override fun getItemCount(): Int {
@@ -61,19 +72,19 @@ class CharactersAdapter @Inject constructor() :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val characterId = getItem(position)?.id
+//        val characterId = getItem(position)?.id
         (holder as CharactersViewHolder).bind(getItem(position))
-        holder.itemView.setOnClickListener {
-            onClickCharacterListener?.let {
-                if (characterId != null) {
-                    it.onClickCharacter(
-                        holder.adapterPosition,
-                        characterId
-                    )
-                }
-
-            }
-        }
+//        holder.itemView.setOnClickListener {
+//            onClickCharacterListener?.let {
+//                if (characterId != null) {
+//                    it.onClickCharacter(
+//                        holder.adapterPosition,
+//                        characterId
+//                    )
+//                }
+//
+//            }
+//        }
     }
 
     fun setState(state: State) {

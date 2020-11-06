@@ -1,4 +1,4 @@
-package com.example.rickandmorty.mainActivity
+package com.example.rickandmorty.main
 
 
 

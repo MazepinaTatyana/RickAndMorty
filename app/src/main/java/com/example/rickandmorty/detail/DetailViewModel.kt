@@ -1,4 +1,4 @@
-package com.example.rickandmorty.detailActivity
+package com.example.rickandmorty.detail
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel

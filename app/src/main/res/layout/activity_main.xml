@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackdround"
-    tools:context=".mainActivity.MainActivity">
+    tools:context=".main.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/bar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,34 +19,24 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/app_bar"
-            style="@style/Widget.Character.Toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:title="@string/characters">
-
+            style="@style/Widget.Character.Toolbar"
+            app:navigationIcon="@drawable/vector"
+            android:layout_height="?attr/actionBarSize">
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewCharacters"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bar" />
-
-
-
-    <ProgressBar
-        android:id="@+id/progressBarLoading"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recyclerViewCharacters" />
+        app:layout_constraintTop_toBottomOf="@id/bar"
+        app:navGraph="@navigation/navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

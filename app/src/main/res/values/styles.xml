@@ -24,6 +24,7 @@
         <item name="android:theme">@style/CharactersTheme</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="android:gravity">center_horizontal</item>
+        <item name="navigationIconColor">@android:color/white</item>
         <item name="titleTextAppearance">@style/TextAppearance.Character.Toolbar</item>
     </style>
 
@@ -37,6 +38,12 @@
             @animator/animator
         </item>
     </style>
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+    </style>
+
 
 
 </resources>
